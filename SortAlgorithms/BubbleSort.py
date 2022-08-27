@@ -11,3 +11,8 @@ def bubble_sort(data):
 data = np.random.randint(20, size = 10)
 print("Dataset: ", data)
 print(f"Bubble sort: {bubble_sort(data)}")
+
+
+
+
+

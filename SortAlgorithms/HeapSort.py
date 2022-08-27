@@ -27,9 +27,9 @@ def heap_sort(data):
     return data
 
 
-
-data = np.random.randint(20, size = 10)
-data = [9,6,9,0,1,3,2,9,7,2]
-print(f"Dataset: {data}")
-print(f"Heapsort: {heap_sort(data)}")
+if __name__=="__main__":
+    data = np.random.randint(20, size = 10)
+    data = [9,6,9,0,1,3,2,9,7,2]
+    print(f"Dataset: {data}")
+    print(f"Heapsort: {heap_sort(data)}")
 

@@ -1,8 +1,9 @@
+from ctypes import Union
 import random
+from typing import Optional
 
-def quick_sort(data, low=0, high=None):
-
-    if(high==None):
+def quick_sort(data, low, high =None):
+    if high is None:
         high=len(data)-1
     if(low<high):
         pivot_idx = partition(data, low, high)

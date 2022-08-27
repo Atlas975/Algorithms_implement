@@ -118,7 +118,7 @@ class LinkedList:
             new_node = Node(data, key, post, prior)
         else:
             new_node = Node(data, key, post)
-        if(prior==None):
+        if(prior is None):
             self.head=new_node
         else:
             prior.head=new_node

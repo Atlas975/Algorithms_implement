@@ -5,7 +5,7 @@ class Stack:
         self.data = LinkedList()
 
     def is_empty(self):
-        return self.data.head==None
+        return self.data.head is None
 
     def push(self,element):
         self.data.insert(0,element)

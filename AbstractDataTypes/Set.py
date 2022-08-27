@@ -1,17 +1,20 @@
 class Set:
 
-    def __init__(self, data = [], convert = True):
-        if(convert):
-            self.data = self.convert_to(data)
-        else:
-            self.data = data
+    def __init__(self, data = None, convert = True):
+        if data is None:
+            data = []
+        self.data = self.convert_to(data) if convert else data
+        self.get_data()
+
+
+    def __init__(self, data = None, convert = True):
+        if data is None:
+            data = []
+        self.data = self.convert_to(data) if convert else data
         self.get_data()
 
     def is_in(self, element, data):
-        for i in data:
-            if i == element:
-                return True
-        return False
+        return any(i == element for i in data)
 
     def convert_to(self, data):
         i = 0
@@ -45,10 +48,7 @@ class Set:
         print(set2)
         if len(self.data) != len(set2):
             return False
-        for i in self.data:
-            if(not self.is_in(i, set2)):
-                return False
-        return True
+        return all(self.is_in(i, set2) for i in self.data)
 
     def merge_set(self, data1, data2):
         self.data = self.convert_to(data1)
@@ -59,28 +59,18 @@ class Set:
         return self.data
 
     def set_intersect(self, data2):
-        intersection = []
         set2 = self.convert_to(data2)
-        for i in self.data:
-            if(self.is_in(i, set2)):
-                intersection.append(i)
-        return intersection
+        return [i for i in self.data if (self.is_in(i, set2))]
 
     def set_difference(self, data2):
-        difference = []
-        for i in self.data:
-            if(not self.is_in(i, data2)):
-                difference.append(i)
+        difference = [i for i in self.data if (not self.is_in(i, data2))]
         for i in data2:
             if(not self.is_in(i, self.data)):
                 difference.append(i)
         return difference
 
     def is_subset(self, data2):
-        for i in range(len(self.data)):
-            if(not self.is_in(self.data[i], data2)):
-                return False
-        return True
+        return all(self.is_in(self.data[i], data2) for i in range(len(self.data)))
 
     def get_data(self):
         return self.data
