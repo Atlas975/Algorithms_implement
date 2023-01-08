@@ -1,21 +1,17 @@
-from cgi import test
 import random
-from typing import List, Union
-
-def insertion_sort(data: List[float]):
-    for i in range(1, len(data)):
-        minimum = i
-        for j in range(minimum - 1, -1, -1):
-            if data[j] > data[minimum]:
-                data[j], data[minimum] = data[minimum], data[j]
-                minimum -= 1
-            else:
-                break
-    return data
+from typing import List
 
 
-data=random.sample(range(1000),10)
-print(f"Dataset: {data}")
-print(f"Insertion sort: {insertion_sort(data)}")
+def insertion_sort(data): # O(n^2)
+    for r in range(1, len(data)):
+        l = r
+        while l > 0 and data[l-1] > data[l]:
+            data[l - 1], data[l] = data[l], data[l - 1]
+            l -= 1
 
 
+if __name__ == "__main__":
+    data: List[float | int] = random.sample(range(100), 10)
+    print(f"Dataset: {data}")
+    insertion_sort(data)
+    print(f"Insertion sort: {data}")

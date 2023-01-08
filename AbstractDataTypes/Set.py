@@ -1,13 +1,11 @@
 class Set:
-
-    def __init__(self, data = None, convert = True):
+    def __init__(self, data=None, convert=True):
         if data is None:
             data = []
         self.data = self.convert_to(data) if convert else data
         self.get_data()
 
-
-    def __init__(self, data = None, convert = True):
+    def __init__(self, data=None, convert=True):
         if data is None:
             data = []
         self.data = self.convert_to(data) if convert else data
@@ -19,7 +17,7 @@ class Set:
     def convert_to(self, data):
         i = 0
         while i != len(data):
-            if(self.is_in(data[i], data[:i])):
+            if self.is_in(data[i], data[:i]):
                 data.pop(i)
                 i -= 1
             else:
@@ -27,7 +25,7 @@ class Set:
         return data
 
     def add_elem(self, element):
-        if(not self.is_in(element, self.data)):
+        if not self.is_in(element, self.data):
             self.data.append(element)
         self.data
 
@@ -37,7 +35,7 @@ class Set:
     def is_valid_set(self):
         i = 0
         while i != len(self.data):
-            if(self.is_in(self.data[i], self.data[:i])):
+            if self.is_in(self.data[i], self.data[:i]):
                 return False
             else:
                 i += 1
@@ -54,7 +52,7 @@ class Set:
         self.data = self.convert_to(data1)
         data2 = self.convert_to(data2)
         for i in data2:
-            if (not self.is_in(i, self.data)):
+            if not self.is_in(i, self.data):
                 self.data.append(i)
         return self.data
 
@@ -65,7 +63,7 @@ class Set:
     def set_difference(self, data2):
         difference = [i for i in self.data if (not self.is_in(i, data2))]
         for i in data2:
-            if(not self.is_in(i, self.data)):
+            if not self.is_in(i, self.data):
                 difference.append(i)
         return difference
 

@@ -1,13 +1,14 @@
 from LinkedList import LinkedList
 
+
 class Queue:
     def __init__(self):
         self.data = LinkedList()
 
     def is_empty(self):
-        return self.data.head==None
+        return self.data.head == None
 
-    def enqueue(self,element):
+    def enqueue(self, element):
         self.data.add(element)
 
     def dequeue(self):
@@ -15,5 +16,3 @@ class Queue:
 
     def peek(self):
         return self.data.get(0)
-
-

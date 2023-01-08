@@ -1,5 +1,6 @@
 from LinkedList import LinkedList
 
+
 class Stack:
     def __init__(self):
         self.data = LinkedList()
@@ -7,8 +8,8 @@ class Stack:
     def is_empty(self):
         return self.data.head is None
 
-    def push(self,element):
-        self.data.insert(0,element)
+    def push(self, element):
+        self.data.insert(0, element)
 
     def pop(self):
         return self.data.remove(0)
