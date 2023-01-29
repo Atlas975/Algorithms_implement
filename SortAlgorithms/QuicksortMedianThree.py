@@ -9,12 +9,12 @@ def quicksort(data, low, high):
 
 def partition(data, l, r):
     m = (l + r) // 2
-    if data[m] < data[l]:
-        data[m], data[l] = data[l], data[m]
     if data[r] < data[l]:
         data[r], data[l] = data[l], data[r]
-    if data[m] < data[r]:
-        data[m], data[r] = data[r], data[m]
+    if data[m] < data[l]:
+        data[m], data[l] = data[l], data[m]
+    elif data[r] < data[m]:
+        data[r], data[m] = data[m], data[r]
 
     pivot = data[r]
     i = l
