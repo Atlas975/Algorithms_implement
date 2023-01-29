@@ -7,22 +7,22 @@ def quicksort(data, low, high):
     return data
 
 
-def partition(data, low, high):
-    mid = (low + high) // 2
-    if data[mid] < data[low]:
-        data[mid], data[low] = data[low], data[mid]
-    if data[high] < data[low]:
-        data[high], data[low] = data[low], data[high]
-    if data[mid] < data[high]:
-        data[mid], data[high] = data[high], data[mid]
+def partition(data, l, r):
+    m = (l + r) // 2
+    if data[m] < data[l]:
+        data[m], data[l] = data[l], data[m]
+    if data[r] < data[l]:
+        data[r], data[l] = data[l], data[r]
+    if data[m] < data[r]:
+        data[m], data[r] = data[r], data[m]
 
-    pivot = data[high]
-    i = low
-    for j in range(i, high):
+    pivot = data[r]
+    i = l
+    for j in range(i, r):
         if data[j] < pivot:
             data[i], data[j] = data[j], data[i]
             i += 1
-    data[i], data[high] = data[high], data[i]
+    data[i], data[r] = data[r], data[i]
     return i
 
 

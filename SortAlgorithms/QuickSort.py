@@ -1,23 +1,23 @@
 def quick_sort(data, l, r):
     if l < r:
-        pivot_idx = partition(data, l, r)
-        quick_sort(data, l, pivot_idx - 1)
-        quick_sort(data, pivot_idx + 1, r)
+        pidx = partition(data, l, r)
+        quick_sort(data, l, pidx - 1)
+        quick_sort(data, pidx + 1, r)
     return data
 
 
-def partition(data, low, high):
-    mid = (low + high) // 2
-    if data[mid] > data[high]:
-        data[mid], data[high] = data[high], data[mid]
+def partition(data, l, r):
+    m = (l + r) // 2
+    if data[m] > data[r]:
+        data[m], data[r] = data[r], data[m]
 
-    l, pivot = low, data[high]
-    for i in range(low, high):
+    l, pivot = l, data[r]
+    for i in range(l, r):
         if data[i] < pivot:
             data[l], data[i] = data[i], data[l]
             l += 1
 
-    data[l], data[high] = data[high], data[l]
+    data[l], data[r] = data[r], data[l]
     return l
 
 
