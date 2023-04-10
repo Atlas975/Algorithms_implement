@@ -36,14 +36,8 @@ print(f"Dataset: {data}")
 search1 = data[random.randint(0, len(data) - 1)]
 search2 = data[random.randint(0, len(data) - 1)]
 search3 = data[random.randint(0, len(data) - 1)]
-print(
-    f"Binary search for {search1}, found at index {binary_search(0,len(data)-1,search1,data)}"
-)
-print(
-    f"Binary search for {search2}, found at index {binary_search(0,len(data)-1,search2,data)}"
-)
-print(
-    f"Binary search for {search3}, found at index {binary_search(0,len(data)-1,search3,data)}"
-)
+print(f"Binary search for {search1}, found at index {binary_search(0,len(data)-1,search1,data)}")
+print(f"Binary search for {search2}, found at index {binary_search(0,len(data)-1,search2,data)}")
+print(f"Binary search for {search3}, found at index {binary_search(0,len(data)-1,search3,data)}")
 
 print(f"Binary search for {search1}, found at index {binary_search_iter(search1,data)}")

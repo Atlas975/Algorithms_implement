@@ -1,12 +1,14 @@
 from dataclasses import dataclass, field
 from typing import Dict, Optional, Union
 
+
 @dataclass
 class Node:
     key: str
     edges: Dict[str, int] = field(default_factory=dict)
     data: object = None
     visit_cost: int | float = 0
+
 
 @dataclass
 class Graph:
@@ -25,9 +27,7 @@ class Graph:
                 if key in self.nodes.keys():
                     self.nodes[key].edges[new_key] = self.nodes[new_key].edges[key]
                 else:
-                    self.nodes[key] = Node(
-                        key, {new_key: self.nodes[new_key].edges[key]}, None, 0
-                    )
+                    self.nodes[key] = Node(key, {new_key: self.nodes[new_key].edges[key]}, None, 0)
 
     def remove_node(self, removal_key):
         lost_data = self.nodes.pop(removal_key).data
@@ -50,9 +50,7 @@ class Graph:
             for traversed in path:
                 for connection in self.nodes[traversed].edges:
                     if connection not in path.keys():
-                        route = (
-                            path[traversed][1] + self.nodes[traversed].edges[connection]
-                        )
+                        route = path[traversed][1] + self.nodes[traversed].edges[connection]
                         if route < distances[connection][1]:
                             distances[connection] = traversed, route
             shortest = (None, float("inf"))
@@ -88,7 +86,6 @@ class Graph:
             metadata += f"Data: {node.data}\n"
             metadata += f"Visit cost: {node.visit_cost}\n"
         return metadata
-
 
 
 if __name__ == "__main__":

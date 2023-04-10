@@ -2,10 +2,10 @@ import random
 from typing import List
 
 
-def insertion_sort(data): # O(n^2)
+def insertion_sort(data):  # O(n^2)
     for r in range(1, len(data)):
         l = r
-        while l > 0 and data[l-1] > data[l]:
+        while l > 0 and data[l - 1] > data[l]:
             data[l - 1], data[l] = data[l], data[l - 1]
             l -= 1
 

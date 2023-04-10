@@ -3,7 +3,6 @@ def quicksort(data, low, high):
         p = partition(data, low, high)
         quicksort(data, low, p - 1)
         quicksort(data, p + 1, high)
-
     return data
 
 

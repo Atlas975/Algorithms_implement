@@ -1,63 +1,64 @@
 from ast import Raise
-from dataclasses import dataclass, field
-from typing import List, Union
-
-NUM = Union[int, float]
-VECTOR = List[NUM]
 
 
-@dataclass
-class Minheap:
-    heap: VECTOR = field(default_factory=list)
-
-    def __post_init__(self) -> None:
-        self.size = len(self.heap)
-        for i in range(self.size // 2, -1, -1):
+class MinHeap:
+    def __init__(self, data):
+        self.heap = data
+        n = len(self.heap)
+        for i in range(n // 2, -1, -1):
             self.heapify(i)
 
-    def heapify(self, idx: int = 0) -> None:
-        root = idx
-        left = idx * 2 + 1
-        right = idx * 2 + 2
-        if (left < self.size) and (self.heap[root] > self.heap[left]):
-            root = left
-        if (right < self.size) and (self.heap[root] > self.heap[right]):
-            root = right
-        if root != idx:
-            self.heap[idx], self.heap[root] = self.heap[root], self.heap[idx]
-            self.heapify(root)
+    def heapify(self, i):
+        m = i
+        l = i * 2 + 1
+        r = i * 2 + 2
+        n = len(self.heap)
 
-    def heappush(self, val: NUM) -> None:
+        if l < n and (self.heap[m] > self.heap[l]):
+            m = l
+        if r < n and (self.heap[m] > self.heap[r]):
+            m = r
+        if m != i:
+            self.heap[i], self.heap[m] = self.heap[m], self.heap[i]
+            self.heapify(m)
+
+    def heappush(self, val):
         self.heap.append(val)
-        self.size += 1
-        idx = self.size - 1
-        parent = idx // 2
-        while self.heap[idx] < self.heap[parent]:
-            self.heap[idx], self.heap[parent] = self.heap[parent], self.heap[idx]
-            idx, parent = parent, parent // 2
+        i = len(self.heap) - 1
+        par = (i - 1) // 2
 
-    def heappop(self) -> NUM:
-        if self.size == 0:
+        while i != 0 and (self.heap[par] > self.heap[i]):
+            self.heap[par], self.heap[i] = self.heap[i], self.heap[par]
+            i = par
+            par = (i - 1) // 2
+
+    def heappop(self):
+        if not self.heap:
             Raise(ValueError("Heap is empty"))
-        self.size -= 1
         self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]
-        val = self.heap.pop(-1)
-        self.heapify()
+        val = self.heap.pop()
+        self.heapify(0)
+
         return val
 
 
 if __name__ == "__main__":
     import random
 
-    data: VECTOR = random.sample(range(100), 10)
+    data = random.sample(range(100), 10)
     print(f"Dataset: {data}\n")
-    minheap = Minheap(data)
-    print(minheap)
+    minheap = MinHeap(data)
+    print(minheap.heap)
     val = minheap.heappop()
     print(f"Popped value: {val}")
     val = minheap.heappop()
     print(f"Popped value: {val}")
     minheap.heappush(-1)
-    print(minheap)
-    val = minheap.heappop()
-    print(f"Popped value: {val}")
+    print(minheap.heap)
+    print(f"Popped value: {minheap.heappop()}")
+    print(minheap.heap)
+    print(f"Popped value: {minheap.heappop()}")
+    print(minheap.heap)
+    print(f"Popped value: {minheap.heappop()}")
+    print(minheap.heap)
+    print(f"Popped value: {minheap.heappop()}")
