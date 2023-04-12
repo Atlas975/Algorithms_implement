@@ -1,10 +1,5 @@
 from functools import reduce
-import sys
 
-from IPython.core import ultratb
-
-sys.excepthook = ultratb.FormattedTB(mode="Verbose", color_scheme="Linux", call_pdb=False)
-import random
 
 
 def radix_sort(data):

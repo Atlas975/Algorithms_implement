@@ -7,27 +7,25 @@ def quicksort(data, low, high):
 
 
 def partition(data, l, r):
-    m = (l + r) // 2
-    if data[r] < data[l]:
-        data[r], data[l] = data[l], data[r]
-    if data[m] < data[l]:
-        data[m], data[l] = data[l], data[m]
-    elif data[r] < data[m]:
-        data[r], data[m] = data[m], data[r]
-
+    m = (l + r) // 2   
+    if data[l] > data[r]:
+        data[l], data[r] = data[r], data[l]
+    if data[l] > data[m]:
+        data[l], data[m] = data[m], data[l]
+    if data[m] < data[r]:
+        data[m], data[r] = data[r], data[m]
+        
     pivot = data[r]
-    i = l
-    for j in range(i, r):
-        if data[j] < pivot:
-            data[i], data[j] = data[j], data[i]
-            i += 1
-    data[i], data[r] = data[r], data[i]
-    return i
+    for i in range(l, r):
+        if data[i] < pivot:  
+            data[l], data[i] = data[i], data[l]  
+            l += 1  
+    data[l], data[r] = data[r], data[l]  
+    return l
 
 
 if __name__ == "__main__":
     import random
-
     data = random.sample(range(1000), 10)
     print(f"Dataset: {data}")
     print(f"Quicksort: {quicksort(data,0,len(data)-1)}")

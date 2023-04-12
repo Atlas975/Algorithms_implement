@@ -1,15 +1,14 @@
 import random
 
 
-def selection_sort(data):
+def selection_sort(data): # O(n^2)
     n = len(data)
     for i in range(n):
-        minimum = i
+        low = i
         for j in range(i + 1, n):
-            if data[j] < data[minimum]:
-                minimum = j
-        if minimum != i:
-            data[minimum], data[i] = data[i], data[minimum]
+            if data[j] < data[low]:
+                low = j
+        data[low], data[i] = data[i], data[low]
 
 
 data = random.sample(range(1000), 10)
