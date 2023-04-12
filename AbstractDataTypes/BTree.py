@@ -1,85 +1,107 @@
-from typing import Optional
+class BTreeNode:
+    def __init__(self, leaf=False):
+        self.keys = []
+        self.values = []
+        self.leaf = leaf
+        self.children = []
 
-class BNode:
-    def __init__(self, keys=None, children=None):
-        self.keys = keys or []
-        self.children = children or []
+    def add_key_value(self, key, value):
+        self.keys.append(key)
+        self.values.append(value)
 
-    def is_full(self, t):
-        return len(self.keys) == (2 * t) - 1
+    def split(self, parent, index):
+        new_node = BTreeNode(self.leaf)
+        mid = len(self.keys) // 2
+        median_key = self.keys[mid]
+        median_value = self.values[mid]
+
+        new_node.keys = self.keys[mid + 1 :]
+        new_node.values = self.values[mid + 1 :]
+        self.keys = self.keys[:mid]
+        self.values = self.values[:mid]
+
+        if not self.leaf:
+            new_node.children = self.children[mid + 1 :]
+            self.children = self.children[: mid + 1]
+
+        parent.add_key_value(median_key, median_value)
+        parent.add_child(new_node, index)
+
+    def add_child(self, node, index):
+        self.children.insert(index + 1, node)
+
+    def get_node_index(self, key):
+        for i, k in enumerate(self.keys):
+            if key < k:
+                return i
+        return len(self.keys)
+
+    def is_full(self, t=2):
+        return len(self.keys) == 2 * t - 1
+
+    def search(self, key):
+        i = 0
+        while i < len(self.keys) and key > self.keys[i]:
+            i += 1
+        if i < len(self.keys) and key == self.keys[i]:
+            return self.values[i]
+        elif self.leaf:
+            return None
+        else:
+            return self.children[i].search(key)
+
 
 class BTree:
     def __init__(self, t):
-        self.root = BNode()
+        self.root = BTreeNode(True)
         self.t = t
 
-    def search(self, k) -> Optional[tuple[BNode, int]]:
+    def search(self, key):
+        return self.root.search(key)
+
+    def insert(self, key, value):
         node = self.root
-        while node:
-            i = 0
-            while i < len(node.keys) and k > node.keys[i]:
-                i += 1
-            if i < len(node.keys) and k == node.keys[i]:
-                return (node, i)
-            elif node.is_leaf():
-                return None
-            node = node.children[i]
-        return None
+        if node.is_full():
+            new_root = BTreeNode(False)
+            new_root.children.append(self.root)
+            self.root = new_root
+            node = self.root
+            node.split(new_root, 0)
+        while not node.leaf:
+            index = node.get_node_index(key)
+            if node.children[index].is_full():
+                node.children[index].split(node, index)
+                if key > node.keys[index]:
+                    index += 1
+            node = node.children[index]
 
-    def insert(self, k):
-        r = self.root
-        if r.is_full(self.t):
-            s = BNode(children=[r])
-            self.root = s
-            self._split_child(s, 0)
-            self._insert_non_full(s, k)
-        else:
-            self._insert_non_full(r, k)
-
-    def _insert_non_full(self, node, k):
-        i = len(node.keys) - 1
-        if node.is_leaf():
-            node.keys.append(0)
-            while i >= 0 and k < node.keys[i]:
-                node.keys[i+1] = node.keys[i]
-                i -= 1
-            node.keys[i+1] = k
-        else:
-            while i >= 0 and k < node.keys[i]:
-                i -= 1
-            i += 1
-            if len(node.children[i].keys) == (2 * self.t) - 1:
-                self._split_child(node, i)
-                if k > node.keys[i]:
-                    i += 1
-            self._insert_non_full(node.children[i], k)
-
-    def _split_child(self, node, i):
-        t = self.t
-        y = node.children[i]
-        z = BNode(keys=y.keys[t:], children=y.children[t:])
-        y.keys = y.keys[:t-1]
-        y.children = y.children[:t]
-        node.children.insert(i+1, z)
-        node.keys.insert(i, y.keys[-1])
+        node.add_key_value(key, value)
 
     def __str__(self):
-        return self._to_string(self.root, "")
-
-    def _to_string(self, node, prefix):
-        s = prefix + str(node.keys) + "\n"
-        for i, child in enumerate(node.children):
-            s += self._to_string(child, prefix + " "*(i!=len(node.children)-1) + "| ")
-        return s
-
+        nodes = [self.root]
+        result = ""
+        while nodes:
+            new_nodes = []
+            line = ""
+            for node in nodes:
+                if node.leaf:
+                    line += " ".join([f"{k}:{v}" for k, v in zip(node.keys, node.values)])
+                else:
+                    line += " ".join([str(k) for k in node.keys])
+                    new_nodes += node.children
+                line += " | "
+            result += line + "\n"
+            nodes = new_nodes
+        return result
 
 
 def main():
     t = BTree(2)
     for i in range(1, 5):
-        t.insert(i)
+        t.insert(i, i * 10)
     print(t)
     print(t.search(2))
+
 
 if __name__ == "__main__":
     main()

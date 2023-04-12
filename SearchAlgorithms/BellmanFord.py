@@ -33,14 +33,8 @@ def bellman_ford(graph, origin) -> dict:  # O(VE) time, O(V) space
         for v, weight in graph[u].items():  # if we can still relax, then there is a negative cycle
             if (vdist := distmp[u] + weight) < distmp[v]:
                 raise ValueError("negative cycle detected")
-
+  
     return distmp
-
-
-def dijkstra(graph, origin) -> dict:  # O((V + E)logV) time, O(V) space
-    distmp = {vertex: float("inf") for vertex in graph}
-    distmp[origin] = 0
-
 
 
 graph = {"A": {"B": -1, "C": 4}, "B": {"C": 3, "D": 2, "E": 2}, "C": {}, "D": {"B": 1, "C": 5}, "E": {"D": -3}}

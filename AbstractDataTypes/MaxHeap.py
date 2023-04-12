@@ -1,9 +1,10 @@
 from ast import Raise
+from collections import deque
 
 
 class MaxHeap:
     def __init__(self, data):
-        self.heap = data
+        self.heap = deque(data)
         n = len(self.heap)
         for i in range(n // 2, -1, -1):
             self.heapify(i)
@@ -27,7 +28,7 @@ class MaxHeap:
         i = len(self.heap) - 1
         par = (i - 1) // 2
 
-        while i != 0 and (self.heap[par] < self.heap[i]):
+        while i > 0 and (self.heap[par] < self.heap[i]):
             self.heap[par], self.heap[i] = self.heap[i], self.heap[par]
             i = par
             par = (i - 1) // 2
